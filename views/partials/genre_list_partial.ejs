@@ -1,0 +1,14 @@
+<h1><%= title %> </h1>
+
+<ul>
+    <% if (genre_list.length > 0) { %>
+        <% genre_list.forEach(genre => { %>
+                <li>
+                    <a href="<%= genre.url %>"><%= genre.name %> </a>
+                </li>
+            <% }) %>
+    <% } %>
+</ul>
+
+
+

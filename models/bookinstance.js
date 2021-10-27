@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+const { DateTime } = require('luxon');
 
 var BookInstanceSchema = new Schema(
     {
@@ -15,6 +16,13 @@ BookInstanceSchema
 .virtual('url')
 .get(function(){
     return '/catalog/bookinstance/' + this._id;
+});
+
+// Virtual for formatted due date
+BookInstanceSchema
+.virtual('due_back_formatted')
+.get(function () {
+    return DateTime.fromJSDate(this.due_back).toLocaleString(DateTime.DATE_MED);
 });
 
 // Export module
