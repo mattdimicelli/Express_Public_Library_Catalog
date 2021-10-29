@@ -1,27 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-</head>
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-2">
-                <%- include('partials/sidebar_partial') %>
-            </div>
-            <div class="col-sm-10">
-                <!-- content block -->
-                <%- include('partials/author_detail_partial', { title, author, author_books }) %> 
-            </div>
-        </div>
-    </div>
-    
-</body>
-</html>
+<%- include('partials/top') %>
+
+<title><%= title %></title>
+
+<%- include('partials/middle') %>
+
+<h1>Author: <%= author.name %> </h1>
+<p><%= author.lifespan %></p>
+
+<div style="margin-left: 20px; margin-top: 20px;">
+    <h4>Books</h4>
+
+    <dl>
+        <% if (author_books.length > 0) { %>
+            <% author_books.forEach(book => { %>
+                <dt>
+                    <a href="<%= book.url %>"><%= book.title %> </a>
+                </dt>
+                <dd><%= book.summary %> </dd>
+            <% }) %>
+        <% } else { %>
+            <p>This author has no books.</p>
+        <% } %>
+    </dl>
+</div>
+
+<%- include('partials/bottom') %>
