@@ -1,4 +1,4 @@
-var BookInstance = require('../models/bookinstance');
+const BookInstance = require('../models/bookinstance');
 
 // Display list of all BookInstances.
 exports.bookinstance_list = function(req, res, next) {
@@ -20,7 +20,7 @@ exports.bookinstance_detail = function(req, res, next) {
     .exec(function(err, bookinstance) {
         if (err) return next(err);
         if (bookinstance === null) {
-            var err = new Error('Book copy not found');
+            const err = new Error('Book copy not found');
             err.status = 404;
             next(err);
         }

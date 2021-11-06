@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const { DateTime } = require('luxon');
 
-var BookInstanceSchema = new Schema(
+const BookInstanceSchema = new Schema(
     {
         book: {type: Schema.Types.ObjectId, required: true, ref: 'Book'},
         imprint: {type: String, required: true},

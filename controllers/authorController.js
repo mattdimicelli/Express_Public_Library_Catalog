@@ -1,6 +1,6 @@
-var Author = require('../models/author');
-var async = require('async');
-var Book = require('../models/book');
+const Author = require('../models/author');
+const async = require('async');
+const Book = require('../models/book');
 
 //  Display list of all Authors.
 exports.author_list = function(req, res, next) {
@@ -28,7 +28,7 @@ exports.author_detail = function(req, res, next) {
     }, function(err, results) {
         if(err) return next(err);
         if (results.author === null) { //author not found
-            var err = new Error('Author not found');
+            const err = new Error('Author not found');
             err.status = 404;
             return next(err);
         }

@@ -1,8 +1,8 @@
-<%- include('partials/top') %> 
+<%- include('partials/_top') %> 
 
 <title><%= title %></title>
 
-<%- include('partials/middle') %> 
+<%- include('partials/_middle') %> 
 
 <h1>ID: <%= bookinstance._id %> </h1>
 <p>
@@ -23,4 +23,4 @@
 <% if (bookinstance.status !== 'Available') { %>
     <p><strong>Due back: </strong><%= bookinstance.due_back_formatted %> </p>
     
-<% } %><%- include('partials/bottom') %> 
+<% } %><%- include('partials/_bottom') %> 

@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 // Require Controller modules
-var author_controller = require('../controllers/authorController');
-var book_controller = require('../controllers/bookController');
-var book_instance_controller = require('../controllers/bookinstanceController');
-var genre_controller = require('../controllers/genreController');
+const author_controller = require('../controllers/authorController');
+const book_controller = require('../controllers/bookController');
+const book_instance_controller = require('../controllers/bookinstanceController');
+const genre_controller = require('../controllers/genreController');
 
 // BOOK ROUTES
 

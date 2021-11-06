@@ -1,10 +1,10 @@
-var Book = require('../models/book');
-var Author = require('../models/author');
-var Genre = require('../models/genre');
-var BookInstance = require('../models/bookinstance');
+const Book = require('../models/book');
+const Author = require('../models/author');
+const Genre = require('../models/genre');
+const BookInstance = require('../models/bookinstance');
 
 
-var async = require('async');
+const async = require('async');
 
 exports.index = function(req, res) {
     
@@ -33,7 +33,8 @@ exports.index = function(req, res) {
 exports.book_list = function(req, res, next) {
     
     Book.find({}, 'title author')
-    .sort({title : 1})
+    .sort([['title', 'ascending']])
+    // same as .sort({title : 1})
     .populate('author')
     .exec(function (err, list_books) {
         if (err) { return next(err); }
@@ -58,8 +59,8 @@ exports.book_detail = function(req, res, next) {
         },
     }, function(err, results) {
         if (err) return next(err);
-        if (results.book=== null) { //no results
-            var err = new Error('Book not found');
+        if (results.book === null) { //no results
+            const err = new Error('Book not found');
             err.status = 404;
             return next(err);
         }

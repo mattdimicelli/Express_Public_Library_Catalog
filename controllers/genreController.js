@@ -1,8 +1,8 @@
-var Genre = require('../models/genre');
-var Book = require('../models/book');
-var async = require('async');
+const Genre = require('../models/genre');
+const Book = require('../models/book');
+const async = require('async');
 
-// Display list of all Genre.
+// Display a list of all the genres.
 exports.genre_list = function(req, res, next) {
     Genre.find()
     .sort([['name', 'ascending']])
@@ -26,7 +26,7 @@ exports.genre_detail = function(req, res, next) {
     }, function(err, results) {
         if (err) return next(err);
         if (results.genre === null) { // No results
-            var err = new Error('Genre not found');
+            const err = new Error('Genre not found');
             err.status = 404;
             return next(err);
         }
