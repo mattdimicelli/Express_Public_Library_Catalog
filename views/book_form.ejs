@@ -1,0 +1,93 @@
+<%- include('partials/_top') %> 
+
+<title><%= title %></title>
+
+<%- include('partials/_middle') %> 
+
+<h1><%= title %> </h1>
+
+<form action="" method="post">
+    <div class="form-group">
+        <label for="title">Title: </label>
+        <% if (locals.book && locals.book.title) { %>
+            <input type="text" id="title" class="form-control" placeholder="Name of book"
+            name="title" required="true" value="<%= locals.book.title %>" />
+        <% } else { %>
+            <input type="text" id="title" class="form-control" placeholder="Name of book"
+            name="title" required="true" value="" />
+        <% } %>
+    </div>
+
+    <div class="form-group">
+        <label for="author">Author: </label>
+        <select name="author" id="author" class="form-control" type="select"
+        placeholder="Select author" required >
+            <% locals.authors.sort((a, b) => { %>
+                <% if (a.family_name.toUpperCase() < b.family_name.toUpperCase()) { %>
+                    <% return -1; %>
+                <% } else if (a.family_name.toUpperCase() > b.family_name.toUpperCase()) { %>
+                    <% return 1; %>
+                <% } else { return 0; } %>
+                
+                <% locals.authors.forEach(author => { %>
+                    <% if (locals.book) { %>
+                        <option value="<%= author._id %>" 
+                        selected="<%= author._id.toString() === locals.book.author._id.toString() ? 'selected' : false %>">
+                            <%= author.name %>
+                        </option>
+                    <% } else { %>
+                        <option value="<%= author._id %>"><%= author.name %></option>
+                    <% } %>
+                <% }) %>
+            <% }) %> 
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="summary">Summary: </label>
+        <% if (locals.book && locals.book.summary) { %>
+            <textarea name="summary" id="summary" class="form-control" type="textarea"
+            placeholder="Summary" required><%= locals.book.summary %></textarea>
+        <% } else { %>
+            <textarea name="summary" id="summary" class="form-control" type="textarea"
+            placeholder="Summary" required></textarea>
+        <% } %>
+    </div>
+
+    <div class="form-group">
+        <label for="isbn">ISBN: </label>
+        <% if (locals.book && locals.book.isbn) { %>
+            <input name="isbn" id="isbn" class="form-control" type="text"
+            placeholder="ISBN13" required value="<%= locals.book.isbn %>" />
+        <% } else { %>
+            <input name="isbn" id="isbn" class="form-control" type="text"
+            placeholder="ISBN13" required value="" />
+        <% } %>
+    </div>
+
+    <div class="form-group">
+        <label>Genre: </label>
+        <div>
+            <% genres.forEach(genre => { %>
+                <div style="display: inline; padding-right: 10px;">
+                    <input type="checkbox" name="genre" id="<%= genre._id %>" 
+                    value="<%= genre._id %>" checked="<%= genre.checked %>"
+                     class="checkbox-input" />
+                     <label for="<%= genre._id %>"><%= genre.name %></label>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+
+<% if (locals.errors) { %>
+    <ul>
+        <% errors.forEach(error => { %>
+            <li> <%= error.msg %> </li>
+        <% }) %>
+    </ul>
+<% } %>
+
+<%- include('partials/_bottom') %> 

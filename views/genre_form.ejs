@@ -10,12 +10,12 @@
     <!-- Since the action is '', the data is sent to the page's own URL -->
     <div class="form-group">
         <label for="name">Genre:</label>
-        <% if (genre) { %>
+        <% if (locals.genre) { %>
             <input type="text" id="name" class="form-control" placeholder="Fantasy, 
-            Poetry, etc." name="name" value="<%= genre.name %>" />
+            Poetry, etc." name="name" value="<%= genre.name %>" required="true" />
         <% } else { %>
             <input type="text" id="name" class="form-control" placeholder="Fantasy, 
-            Poetry, etc." name="name" value="" />
+            Poetry, etc." name="name" value="" required="true" />
         <% } %>
         <!-- The value will always be empty if called from the GET route since it is a new 
         form, but if called from a POST route it will contain the (invalid) value 
@@ -24,7 +24,7 @@
     <button class="btn btn-primary" type="submit">Submit</button>
 </form>
 
-<% if (errors) { %>
+<% if (locals.errors) { %>
     <ul>
         <% errors.forEach(error => { %>
             <%= error.msg %> 

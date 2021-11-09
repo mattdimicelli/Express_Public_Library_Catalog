@@ -1,0 +1,53 @@
+<%- include('partials/_top') %>
+
+<title><%= title %></title>
+
+<%- include('partials/_middle') %> 
+
+<h1><%= title %> </h1>
+
+<form action="" method="post">
+    <div class="form-group">
+        <label for="first_name">First name: </label>
+        <% if (locals.author && locals.author.first_name) { %>
+            <input type="text" id="first_name" class="form-control" placeholder="First name"
+            name="first_name" required="true" value="<%= locals.author.first_name %>" >
+        <% } else { %>
+            <input type="text" id="first_name" class="form-control" placeholder="First name"
+            name="first_name" required="true" value="" >
+        <% } %>
+        <label for="family_name">Family name: </label>
+        <% if (locals.author && locals.author.family_name) { %>
+            <input type="text" id="family_name" name="family_name" class="form-control"
+            placeholder="Family name (surname)" required="true" value="<%= locals.author.family_name %>" />
+        <% } else { %>
+            <input type="text" id="family_name" name="family_name" class="form-control"
+            placeholder="Family name (surname)" required="true" value="" />
+        <% } %>
+        <label for="date_of_birth">Date of birth: </label>
+        <% if (locals.author && locals.author.date_of_birth) { %>
+            <input type="date" id="date_of_birth" name="date_of_birth" class="form-control" 
+            value="<%= locals.author.date_of_birth %>" />
+        <% } else { %>
+            <input type="date" id="date_of_birth" name="date_of_birth" class="form-control" 
+            value="" />
+        <% } %>
+        <label for="date_of_death">Date of death: </label>
+        <% if (locals.author && locals.author.date_of_death) { %>
+            <input type="date" id="date_of_death" name="date_of_death" class="form-control" 
+            value="<%= locals.author.date_of_death %>" />
+        <% } else { %>
+            <input type="date" id="date_of_death" name="date_of_death" class="form-control" 
+            value="" />
+        <% } %>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <% if (locals.errors) { %>
+            <ul>
+                <% errors.forEach(error => { %>
+                    <li><%= error.msg %> </li>
+                <% }) %>
+            </ul>
+        <% } %>
+    </div>
+</form>
+<%- include('partials/_bottom') %> 
