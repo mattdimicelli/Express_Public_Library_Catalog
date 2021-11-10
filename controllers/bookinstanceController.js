@@ -109,7 +109,7 @@ exports.bookinstance_delete_post = function(req, res, next) {
 // Display BookInstance update form on GET.
 exports.bookinstance_update_get = function(req, res, next) {
     
-    BookInstance.findById(req.params.id).exec((err, bookinstance) => {
+    BookInstance.findById(req.params.id).populate('book').exec((err, bookinstance) => {
         if (err) return next(err);
         if (bookinstance === null) {
             const err = new Error('Copy not found');

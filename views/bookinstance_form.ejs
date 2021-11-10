@@ -28,6 +28,7 @@
                 <% }) %> 
             </select>
         <% } else if (locals.bookinstance) { %>
+            <% console.log('fire') %>
             <select name="book" id="book" class="form-control" placeholder="Select book"
             required type="select">
                 <option value="<%= bookinstance._id %>" selected="true">
