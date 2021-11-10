@@ -31,6 +31,8 @@
                 
                 <% locals.authors.forEach(author => { %>
                     <% if (locals.book) { %>
+                        <!-- handle GET form, where book.author is an obj, and POST, where it is a str -->
+                        
                         <option value="<%= author._id %>" 
                         selected="<%= author._id.toString() === locals.book.author._id.toString() ? 'selected' : false %>">
                             <%= author.name %>

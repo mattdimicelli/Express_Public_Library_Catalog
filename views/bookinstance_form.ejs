@@ -1,0 +1,61 @@
+<%- include('partials/_top') %> 
+
+<title><%= title %></title>
+
+<%- include('partials/_middle') %> 
+
+<h1><%= title %> </h1>
+
+<form action="" method="post">
+    <div class="form-group">
+        <label for="book">Book: </label>
+        <select name="book" id="book" class="form-control" placeholder="Select book"
+        required type="select">
+            <% book_list.sort((a,b) => { %>
+                <% if(a.title.toUpperCase() < b.title.toUpperCase()) return -1; %>
+                <% if (a.title.toUpperCase() === b.title.toUpperCase()) return 0; %>
+                <% if (a.title.toUpperCase() > b.title.toUpperCase()) return 1; %>
+            <% }) %>
+            <% book_list.forEach(book => { %>
+                <% if(locals.bookinstance) { %>
+                    <option value="<%= book._id %>" selected="<%= locals.bookinstance.book.toString() === book._id.toString() ? 'selected' : false %>">
+                        <%= book.title %>
+                    </option>
+                <% } else { %>
+                    <option value="<%= book._id %>"><%= book.title %></option>
+                <% } %>
+            <% }) %> 
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="imprint">Imprint: </label>
+            <input type="text" id="imprint" class="form-control" placeholder="Publish and date information"
+            name="imprint" required value="<%= locals.bookinstance ? bookinstance.imprint : '' %>" />
+    </div>
+    <div class="form-group">
+        <label for="due_back">Date when book available: </label>
+        <input type="text" class="form-control" id="due_back" type="date" 
+        name="due_back" value="<%= locals.bookinstance ? bookinstance.due_back : '' %>" />
+    </div>
+    <div class="form-group">
+        <label for="status">Status: </label>
+        <select name="status" type="select" id="status" placeholder="Select status"
+        class="form-control" required>
+            <option value="Maintenance">Maintenance</option>
+            <option value="Available">Available</option>
+            <option value="Loaned">Loaned</option>
+            <option value="Reserved">Reserved</option>
+        </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+    <% if (locals.errors) { %>
+     <ul>
+         <% errors.forEach(error => { %>
+            <li><%= error.msg %></li> 
+         <% }) %>
+     </ul>
+    <% } %>
+</form>
+
+
+<%- include('partials/_bottom') %> 
