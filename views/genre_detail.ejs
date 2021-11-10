@@ -18,5 +18,9 @@
     <% } else { %>
         <p>This genre has no books</p>
     <% } %>
-    
-</div><%- include('partials/_bottom') %> 
+</div>
+<hr>
+<p>
+    <a href="<%= genre.url + '/delete' %>">Delete Genre</a>
+</p>
+<%- include('partials/_bottom') %> 

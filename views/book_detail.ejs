@@ -33,7 +33,7 @@
             <% } else if (val.status === 'Maintenance') { %>
                 <p class="text-danger"><%= val.status %> </p>
             <% } else { %>
-                <p class="text-warning">val.status</p>
+                <p class="text-warning"><%= val.status %></p>
             <% } %>
             <p><strong>Imprint: </strong><%= val.imprint %> </p>
             <% if (val.status !== 'Available') { %>
