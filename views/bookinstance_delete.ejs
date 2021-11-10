@@ -1,0 +1,19 @@
+<%- include('partials/_top') %>
+
+<title><%= title %></title>
+
+<%- include('partials/_middle') %> 
+
+<h1><%= title %>: <%= book_instance.book.title %>  </h1>
+
+<p>Do you really want to delete this copy?</p>
+
+<form action="" method="post">
+    <div class="form-group">
+        <input type="hidden" class="form-control" id="book_instanceid" name="book_instanceid"
+        required value="<%= book_instance._id %>">
+    </div>
+    <button class="btn btn-primary" type="submit">Delete</button>
+</form>
+
+<%- include('partials/_bottom') %> 

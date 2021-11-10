@@ -233,10 +233,10 @@ exports.book_update_get = function(req, res, next) {
         }
         // Otherwise, success
         // Mark the selected genres with check marks.
-        for (let all_g_iter = 0; all_g_iter < results.genres.length; all_g_iter++) {
-            for (let book_g_iter = 0; book_g_iter < results.book.genre.length; book_g_iter++) {
-                if (results.genres[all_g_iter]._id.toString() === results.book.genre[book_g_iter]._id.toString()) {
-                    results.genres[all_g_iter].checked = 'true';
+        for (let i = 0; i < results.genres.length; i++) {
+            for (let y = 0; y < results.book.genre.length; y++) {
+                if (results.genres[i]._id.toString() === results.book.genre[y]._id.toString()) {
+                    results.genres[i].checked = 'true';
                 }
             }
         }

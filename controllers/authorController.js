@@ -153,11 +153,78 @@ exports.author_delete_post = function(req, res, next) {
 };
 
 //  Display Author update form on GET
-exports.author_update_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: Author update GET');
+exports.author_update_get = function(req, res, next) {
+
+    Author.findById(req.params.id).exec((err, author) => {
+        if (err) return next(err);
+        if (author === null) {
+            const err = new Error('Author not found');
+            err.status = 404;
+            return next(err);
+        }
+        res.render('author_form', { title: 'Update Author', author });
+    }); 
 };
 
 // Handle Author update on POST
-exports.author_update_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: Author update POST');
-};
+exports.author_update_post = [
+
+     // Validate and sanitize fields
+     body('first_name').trim().isLength({ min: 1 }).escape().withMessage(
+        'First name must be specified').isAlphanumeric().withMessage(
+            'First name has non-alphanumeric characters'
+        ),
+    body('family_name').trim().isLength({ min: 1}).escape().withMessage(
+        'Family name must be specified').isAlphanumeric().withMessage(
+            'Family name has non-alphanumeric characters'
+        ),
+    body('date_of_birth', 'Invalid date of birth').optional({ checkFalsy: true })
+    .isISO8601().toDate(),
+    //  These validations are only performed if the field has been entered.
+    // These check if the dates are ISO-8601 compliant.
+    // checkFalsy means that we'll accept either an empty str or a null as an empty value
+    body('date_of_death', 'Invalid date of death').optional({ checkFalsy: true })
+    .isISO8601().toDate(),
+    // parameters are received from the requests as strings.  toDate() (or toBoolean())
+    // recasts them to the proper JS types
+
+    // JavaScript treats date strings as including the time of 0 hours,
+    //  but additionally treats date strings in that format (the ISO 8601
+    //     standard) as including the time 0 hours UTC, rather than the 
+    //     local time. If your time zone is west of UTC, the date display,
+    //      being local, will be one day before the date you entered. This
+    //       is one of several complexities (such as multi-word family names and 
+    //         multi-author books) that we are not addressing here.
+
+
+    // Process request after validation and sanitization
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        // create an author instance with the trimmed/escaped data and the old ID
+        const author = new Author({
+            first_name: req.body.first_name,
+            family_name: req.body.family_name,
+            date_of_birth: req.body.date_of_birth,
+            date_of_death: req.body.date_of_death,
+            _id: req.params.id, // This is required, or a new ID will be assigned!
+        });
+
+        if (!(errors.isEmpty())) {
+
+            // Re-render the form with sanitized values/error msgs
+            res.render('author_form', { 
+                title: 'Update Author',
+                author,
+                errors: errors.array(),
+            });
+            return;
+        }
+        else {
+            Author.findByIdAndUpdate(req.params.id, author, {}, (err, theauthor) => {
+                if (err) return next(err);
+                res.redirect(theauthor.url);
+            });
+        }
+    }
+];

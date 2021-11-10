@@ -28,7 +28,7 @@
                 <% } else if (a.family_name.toUpperCase() > b.family_name.toUpperCase()) { %>
                     <% return 1; %>
                 <% } else { return 0; } %>
-                
+            <% }); %>
                 <% locals.authors.forEach(author => { %>
                     <% if (locals.book) { %>
                         <!-- handle GET form, where book.author is an obj, and POST, where it is a str -->
@@ -41,7 +41,6 @@
                         <option value="<%= author._id %>"><%= author.name %></option>
                     <% } %>
                 <% }) %>
-            <% }) %> 
         </select>
     </div>
 
@@ -71,6 +70,7 @@
         <label>Genre: </label>
         <div>
             <% genres.forEach(genre => { %>
+               
                 <div style="display: inline; padding-right: 10px;">
                     <input type="checkbox" name="genre" id="<%= genre._id %>" 
                     value="<%= genre._id %>" checked="<%= genre.checked %>"

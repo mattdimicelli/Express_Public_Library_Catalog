@@ -1,17 +1,17 @@
 <%- include('partials/_top') %> 
 
-<title><%= title %></title>
+<title><%- title %></title>
 
 <%- include('partials/_middle') %> 
 
-<h1>Genre: <%= genre.name %> </h1>
+<h1>Genre: <%- genre.name %> </h1>
 
 <div style="margin-left: 20px;margin-top: 20px">
     <h4>Books</h4>
     <% if (genre_books.length > 0) { %>
         <% genre_books.forEach(book => { %>
             <dt>
-                <a href="<%= book.url %>"><%= book.title %> </a>
+                <a href="<%- book.url %>"><%- book.title %> </a>
             </dt>
             <dd><% book.summary %> </dd>
         <% }) %>
@@ -21,6 +21,6 @@
 </div>
 <hr>
 <p>
-    <a href="<%= genre.url + '/delete' %>">Delete Genre</a>
+    <a href="<%- genre.url + '/delete' %>">Delete Genre</a>
 </p>
 <%- include('partials/_bottom') %> 

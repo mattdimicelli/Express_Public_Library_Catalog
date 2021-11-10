@@ -25,9 +25,9 @@
             placeholder="Family name (surname)" required="true" value="" />
         <% } %>
         <label for="date_of_birth">Date of birth: </label>
-        <% if (locals.author && locals.author.date_of_birth) { %>
+        <% if (locals.author && locals.author.date_of_birth ) { %>
             <input type="date" id="date_of_birth" name="date_of_birth" class="form-control" 
-            value="<%= locals.author.date_of_birth %>" />
+            value="<%= locals.author.dob_formatted %>" />
         <% } else { %>
             <input type="date" id="date_of_birth" name="date_of_birth" class="form-control" 
             value="" />
@@ -35,7 +35,7 @@
         <label for="date_of_death">Date of death: </label>
         <% if (locals.author && locals.author.date_of_death) { %>
             <input type="date" id="date_of_death" name="date_of_death" class="form-control" 
-            value="<%= locals.author.date_of_death %>" />
+            value="<%= locals.author.date_of_death_formatted %>" />
         <% } else { %>
             <input type="date" id="date_of_death" name="date_of_death" class="form-control" 
             value="" />

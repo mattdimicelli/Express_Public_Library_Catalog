@@ -1,22 +1,22 @@
 <%- include('partials/_top') %> 
 
-<title><%= title %></title>
+<title><%- title %></title>
 
 <%- include('partials/_middle') %> 
 
-<h1><%= book.title %> </h1>
+<h1><%- book.title %> </h1>
 
 <p>
     <strong>Author: </strong>
-    <a href="<%= book.author.url %>"><%= book.author.name %></a>
+    <a href="<%- book.author.url %>"><%- book.author.name %></a>
 </p>
-<p><strong>Summary: </strong><%= book.summary %></p>
-<p><strong>ISBN: </strong><%= book.isbn %> </p>
+<p><strong>Summary: </strong><%- book.summary %></p>
+<p><strong>ISBN: </strong><%- book.isbn %> </p>
 <p>
     <strong>Genre: </strong>
     <% if (book.genre.length > 0) { %>
         <% book.genre.forEach((val, index) => { %>
-            <a href="<%= val.url %>"><%= val.name %> </a>
+            <a href="<%- val.url %>"><%- val.name %> </a>
             <% if (index < book.genre.length - 1) { %>
                 ,
             <% } %>
@@ -29,17 +29,17 @@
         <% book_instances.forEach(val => { %>
             <hr>
             <% if (val.status === 'Available') { %>
-                <p class="text-success"><%= val.status %> </p>
+                <p class="text-success"><%- val.status %> </p>
             <% } else if (val.status === 'Maintenance') { %>
-                <p class="text-danger"><%= val.status %> </p>
+                <p class="text-danger"><%- val.status %> </p>
             <% } else { %>
-                <p class="text-warning"><%= val.status %></p>
+                <p class="text-warning"><%- val.status %></p>
             <% } %>
-            <p><strong>Imprint: </strong><%= val.imprint %> </p>
+            <p><strong>Imprint: </strong><%- val.imprint %> </p>
             <% if (val.status !== 'Available') { %>
-                <p><strong>Due back: </strong><%= val.due_back %> </p>
+                <p><strong>Due back: </strong><%- val.due_back %> </p>
             <% } %>
-            <p><strong>Id: </strong><a href="<%= val.url %>"><%= val._id %> </a></p>
+            <p><strong>Id: </strong><a href="<%- val.url %>"><%- val._id %> </a></p>
         <% }) %>
     <% } else { %>
         <p>There are no copies of this book in the library.</p>
@@ -47,10 +47,10 @@
 </div>
 <hr>
 <p>
-    <a href="<%= book.url + '/delete' %>">Delete Book</a>
+    <a href="<%- book.url + '/delete' %>">Delete Book</a>
 </p>
 <p>
-    <a href="<%= book.url + '/update' %>">Update Book</a>
+    <a href="<%- book.url + '/update' %>">Update Book</a>
 </p>
 
 <%- include('partials/_bottom') %> 

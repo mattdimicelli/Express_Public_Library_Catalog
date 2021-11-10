@@ -10,7 +10,7 @@ exports.bookinstance_list = function(req, res, next) {
             if (err) return next(err);
             //Successful, so render
             res.render('bookinstance_list', {
-                title: 'Book Instance List', bookinstance_list: list_bookinstances
+                title: 'Book Copy List', bookinstance_list: list_bookinstances
             }); 
         });
 };
@@ -36,7 +36,7 @@ exports.bookinstance_create_get = function(req, res, next) {
     Book.find({}, 'title')
     .exec((err, books) => {
         if (err) return next(err);
-        res.render('bookinstance_form', { title: 'Create BookInstance', book_list: books });
+        res.render('bookinstance_form', { title: 'Create Copy', book_list: books });
     });
 };
 
@@ -99,16 +99,64 @@ exports.bookinstance_delete_get = function(req, res, next) {
         
 
 // Handle BookInstance delete on POST.
-exports.bookinstance_delete_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: BookInstance delete POST');
+exports.bookinstance_delete_post = function(req, res, next) {
+    BookInstance.findByIdAndRemove(req.body.book_instanceid, function deleteCopy(err) {
+        if (err) return next(err);
+        res.redirect('/catalog/bookinstances');
+    });
 };
 
 // Display BookInstance update form on GET.
-exports.bookinstance_update_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: BookInstance update GET');
+exports.bookinstance_update_get = function(req, res, next) {
+    
+    BookInstance.findById(req.params.id).exec((err, bookinstance) => {
+        if (err) return next(err);
+        if (bookinstance === null) {
+            const err = new Error('Copy not found');
+            err.status = 404;
+            return next(err);
+        }
+    
+        res.render('bookinstance_form', { title: 'Update Copy', bookinstance });
+    });
 };
 
 // Handle bookinstance update on POST.
-exports.bookinstance_update_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: BookInstance update POST');
-};
+exports.bookinstance_update_post = [
+
+    // Validate and sanitize fields
+    body('book', 'Book must be specified').trim().isLength({ min: 1 }).escape(),
+    body('imprint', 'Imprint must be specified').trim().isLength({ min: 1 }).escape(),
+    body('status').escape(),
+    body('due_back', 'Invalid date').optional({ checkFalsy: true }).isISO8601().toDate(),
+
+    // Process request after validation and sanitization
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        // create a copy with the trimmed/escaped data and the old ID
+        const bookinstance = new BookInstance({
+            book: req.body.book,
+            imprint: req.body.imprint,
+            status: req.body.status,
+            due_back: req.body.due_back,
+            _id: req.params.id, // This is required, or a new ID will be assigned!
+        });
+
+        if (!(errors.isEmpty())) {
+
+            res.render('bookinstance_form', { 
+                title: 'Update Copy',
+                bookinstance,
+                errors: errors.array(),
+            });
+            return;
+        }
+        else {
+            BookInstance.findByIdAndUpdate(req.params.id, bookinstance, {}, (err, thecopy) => {
+                if (err) return next(err);
+                res.redirect(thecopy.url);
+            });
+        }
+    }
+];

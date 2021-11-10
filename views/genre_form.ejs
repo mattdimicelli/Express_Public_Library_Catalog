@@ -14,8 +14,7 @@
             <input type="text" id="name" class="form-control" placeholder="Fantasy, 
             Poetry, etc." name="name" value="<%= genre.name %>" required="true" />
         <% } else { %>
-            <input type="text" id="name" class="form-control" placeholder="Fantasy, 
-            Poetry, etc." name="name" value="" required="true" />
+            <input type="text" id="name" class="form-control" placeholder="Fantasy, Poetry, etc." name="name" value="" required="true" />
         <% } %>
         <!-- The value will always be empty if called from the GET route since it is a new 
         form, but if called from a POST route it will contain the (invalid) value 

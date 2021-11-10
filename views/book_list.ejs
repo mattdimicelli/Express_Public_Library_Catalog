@@ -1,17 +1,17 @@
 <%- include('partials/_top') %> 
 
-<title><%= title %></title>
+<title><%- title %></title>
 
 <%- include('partials/_middle') %> 
 
-<h1><%= title %></h1>
+<h1><%- title %></h1>
 
 <ul>
     <% if(book_list.length > 0) { %> 
         <% book_list.forEach(book => { %>
             <li>
-                <a href="<%= book.url %>"><%= book.title %> </a>
-                <%= book.author.name %> 
+                <a href="<%- book.url %>"><%- book.title %> </a>
+                <%- book.author.name %> 
             </li>
         <% }); %>
     <% } else { %>
