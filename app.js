@@ -9,6 +9,9 @@ import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
 import catalogRouter from './routes/catalog.js';
 
+import compression from 'compression';
+import helmet from 'helmet';
+
 const app = express();
 const __dirname = fileURLToPath(dirname(import.meta.url));
 
@@ -26,6 +29,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(helmet()); //middleware to set HTTP headers to protect app from vulnerabilities.
+// This method adds a subset of the available headers
+
 app.use(logger('dev'));
 app.use(express.json()); /* parses incoming requests with JSON payloads.  only will
 look at requests where the Content-Type header matches the type option.  A new body
@@ -36,6 +42,10 @@ app.use(express.urlencoded({ extended: false }));  /*parses incoming requests wi
 payloads.  {extended: false} means that nested objects will not be parsed*/
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(compression()) // Compresses the HTTP response sent back to the client.
+// The method varies per the methods the client says it supports in the req.
+// If none are supported, the res will be sent uncompressed.
 
 
 app.use('/', indexRouter);
