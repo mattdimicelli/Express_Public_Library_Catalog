@@ -1,10 +1,10 @@
-const Author = require('../models/author');
-const async = require('async');
-const Book = require('../models/book');
-const { body, validationResult } = require('express-validator');
+import Author from '../models/author.js';
+import async from 'async';
+import Book from '../models/book.js';
+import { body, validationResult } from 'express-validator';
 
 //  Display list of all Authors.
-exports.author_list = function(req, res, next) {
+export const author_list = function(req, res, next) {
     
     Author.find()
         .sort([['family_name', 'ascending']])
@@ -16,7 +16,7 @@ exports.author_list = function(req, res, next) {
 };
 
 // Display detail page for a specific author
-exports.author_detail = function(req, res, next) {
+export const author_detail = function(req, res, next) {
     async.parallel({
         author: function(callback) {
             Author.findById(req.params.id)
@@ -39,12 +39,12 @@ exports.author_detail = function(req, res, next) {
 };
 
 // Display Author create form on GET
-exports.author_create_get = function(req, res, next) {
+export const author_create_get = function(req, res, next) {
     res.render('author_form', { title: 'Create Author' });
 };
 
 // Handle Author create on POST
-exports.author_create_post = [
+export const author_create_post = [
 
     // Validate and sanitize fields
     body('first_name').trim().isLength({ min: 1 }).escape().withMessage(
@@ -104,7 +104,7 @@ exports.author_create_post = [
 ]
 
 // Display Author delete form on GET
-exports.author_delete_get = function(req, res, next) {
+export const author_delete_get = function(req, res, next) {
     
     async.parallel({
         author: function(callback) {
@@ -125,7 +125,7 @@ exports.author_delete_get = function(req, res, next) {
 };
 
 // Handle Author delete on POST
-exports.author_delete_post = function(req, res, next) {
+export const author_delete_post = function(req, res, next) {
     
     async.parallel({
         author: function(callback) {
@@ -153,7 +153,7 @@ exports.author_delete_post = function(req, res, next) {
 };
 
 //  Display Author update form on GET
-exports.author_update_get = function(req, res, next) {
+export const author_update_get = function(req, res, next) {
 
     Author.findById(req.params.id).exec((err, author) => {
         if (err) return next(err);
@@ -167,7 +167,7 @@ exports.author_update_get = function(req, res, next) {
 };
 
 // Handle Author update on POST
-exports.author_update_post = [
+export const author_update_post = [
 
      // Validate and sanitize fields
      body('first_name').trim().isLength({ min: 1 }).escape().withMessage(

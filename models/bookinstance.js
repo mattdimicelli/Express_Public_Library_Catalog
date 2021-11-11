@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
-const { DateTime } = require('luxon');
+import { DateTime } from 'luxon';
 
 const BookInstanceSchema = new Schema(
     {
@@ -33,5 +33,5 @@ BookInstanceSchema
 });
 
 // Export module
-module.exports = mongoose.model('BookInstance', BookInstanceSchema);
+export default mongoose.model('BookInstance', BookInstanceSchema);
 

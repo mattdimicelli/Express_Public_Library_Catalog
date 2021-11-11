@@ -1,13 +1,13 @@
-const Book = require('../models/book');
-const Author = require('../models/author');
-const Genre = require('../models/genre');
-const BookInstance = require('../models/bookinstance');
-const { body, validationResult } = require('express-validator');
+import Book from '../models/book.js';
+import Author from '../models/author.js';
+import Genre from '../models/genre.js';
+import BookInstance from '../models/bookinstance.js';
+import { body, validationResult } from 'express-validator';
 
 
-const async = require('async');
+import async from 'async';
 
-exports.index = function(req, res) {
+export const index = function(req, res) {
     
     async.parallel({
         book_count: function(callback) {
@@ -31,7 +31,7 @@ exports.index = function(req, res) {
 };
 
 // Display list of all books.
-exports.book_list = function(req, res, next) {
+export const book_list = function(req, res, next) {
     
     Book.find({}, 'title author')
     .sort([['title', 'ascending']])
@@ -45,7 +45,7 @@ exports.book_list = function(req, res, next) {
 };
 
 // Display detail page for a specific book.
-exports.book_detail = function(req, res, next) {
+export const book_detail = function(req, res, next) {
     
     async.parallel({
         book: function(callback) {
@@ -72,7 +72,7 @@ exports.book_detail = function(req, res, next) {
 };
 
 // Display book create form on GET.
-exports.book_create_get = function(req, res, next) {
+export const book_create_get = function(req, res, next) {
     // Get all authors and genres, which we can use for adding to our book
     async.parallel({
         authors: function(callback) {
@@ -92,7 +92,7 @@ exports.book_create_get = function(req, res, next) {
 };
 
 // Handle book create on POST.
-exports.book_create_post = [
+export const book_create_post = [
     // Convert the genre to an array.
     (req, res, next) => {
         if(!(req.body.genre instanceof Array)) {
@@ -163,7 +163,7 @@ exports.book_create_post = [
 ];
 
 // Display book delete form on GET.
-exports.book_delete_get = function(req, res, next) {
+export const book_delete_get = function(req, res, next) {
     
     async.parallel({
         book: function(callback) {
@@ -184,7 +184,7 @@ exports.book_delete_get = function(req, res, next) {
 };
 
 // Handle book delete on POST.
-exports.book_delete_post = function(req, res, next) {
+export const book_delete_post = function(req, res, next) {
     
     async.parallel({
         book: function(callback) {
@@ -212,7 +212,7 @@ exports.book_delete_post = function(req, res, next) {
 };
 
 // Display book update form on GET.
-exports.book_update_get = function(req, res, next) {
+export const book_update_get = function(req, res, next) {
     // Get book, authors, and genres for form
     async.parallel({
         book: callback => {
@@ -245,7 +245,7 @@ exports.book_update_get = function(req, res, next) {
 };
 
 // Handle book update on POST.
-exports.book_update_post = [
+export const book_update_post = [
 
     // Convert the genre to an array
     (req, res, next) => {

@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { DateTime } = require('luxon');
+import mongoose from 'mongoose';
+import { DateTime } from 'luxon';
 
 const Schema = mongoose.Schema;
 
@@ -56,4 +56,4 @@ AuthorSchema
 
 
 // Export model
-module.exports = mongoose.model('Author', AuthorSchema);
+export default mongoose.model('Author', AuthorSchema);

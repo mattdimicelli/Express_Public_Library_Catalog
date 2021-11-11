@@ -1,17 +1,19 @@
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+import createError from 'http-errors';
+import express from 'express';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const catalogRouter = require('./routes/catalog');
+import indexRouter from './routes/index.js';
+import usersRouter from './routes/users.js';
+import catalogRouter from './routes/catalog.js';
 
 const app = express();
+const __dirname = fileURLToPath(dirname(import.meta.url));
 
 // set up mongoose connection
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const mongoDB = 'mongodb+srv://mrd2689a:ode7SLb43TLDwFGG@cluster0.umci8.mongodb.net/local_library?retryWrites=true&w=majority';
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });  
 /* The useNewUrlParser option exists simply as a fallback in case the new parser
@@ -56,4 +58,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+export default app;

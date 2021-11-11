@@ -1,11 +1,11 @@
-const Genre = require('../models/genre');
-const Book = require('../models/book');
-const async = require('async');
-const { body, validationResult } = require('express-validator');
+import Genre from '../models/genre.js';
+import Book from '../models/book.js';
+import async from 'async';
+import { body, validationResult } from 'express-validator';
 
 
 // Display a list of all the genres.
-exports.genre_list = function(req, res, next) {
+export const genre_list = function(req, res, next) {
     Genre.find()
     .sort([['name', 'ascending']])
     .exec(function(err, list_genres) {
@@ -15,7 +15,7 @@ exports.genre_list = function(req, res, next) {
 };
 
 // Display detail page for a specific Genre.
-exports.genre_detail = function(req, res, next) {
+export const genre_detail = function(req, res, next) {
     async.parallel({
         genre: function(callback) {
             Genre.findById(req.params.id)
@@ -38,12 +38,12 @@ exports.genre_detail = function(req, res, next) {
 };
 
 // Display Genre create form on GET.
-exports.genre_create_get = function(req, res, next) {
+export const genre_create_get = function(req, res, next) {
     res.render('genre_form', { title: 'Create Genre' });
 };
 
 // Handle Genre create on POST.
-exports.genre_create_post = [  /* the validators are middleware funcs, so this 
+export const genre_create_post = [  /* the validators are middleware funcs, so this 
     is an arr of middleware functions */
     // Validate and sanitize the name field
     body('name', 'Genre name required').trim().isLength( {min: 1}).escape(),
@@ -85,7 +85,7 @@ exports.genre_create_post = [  /* the validators are middleware funcs, so this
 ];
 
 // Display Genre delete form on GET.
-exports.genre_delete_get = function(req, res, next) {
+export const genre_delete_get = function(req, res, next) {
     
     async.parallel({
         genre: function(callback) {
@@ -106,7 +106,7 @@ exports.genre_delete_get = function(req, res, next) {
 };
 
 // Handle Genre delete on POST.
-exports.genre_delete_post = function(req, res, next) {
+export const genre_delete_post = function(req, res, next) {
     
     async.parallel({
         genre: function(callback) {
@@ -134,11 +134,11 @@ exports.genre_delete_post = function(req, res, next) {
 };
 
 // Display Genre update form on GET.
-exports.genre_update_get = function(req, res) {
+export const genre_update_get = function(req, res) {
     res.send('NOT IMPLEMENTED: Genre update GET');
 };
 
 // Handle Genre update on POST.
-exports.genre_update_post = function(req, res) {
+export const genre_update_post = function(req, res) {
     res.send('NOT IMPLEMENTED: Genre update POST');
 };

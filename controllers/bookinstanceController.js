@@ -1,9 +1,9 @@
-const BookInstance = require('../models/bookinstance');
-const Book = require('../models/book');
-const { body, validationResult } = require('express-validator');
+import BookInstance from '../models/bookinstance.js';
+import Book from '../models/book.js';
+import { body, validationResult } from 'express-validator';
 
 // Display list of all BookInstances.
-exports.bookinstance_list = function(req, res, next) {
+export const bookinstance_list = function(req, res, next) {
     BookInstance.find()
         .populate('book')
         .exec(function (err, list_bookinstances) {
@@ -16,7 +16,7 @@ exports.bookinstance_list = function(req, res, next) {
 };
 
 // Display detail page for a specific BookInstance.
-exports.bookinstance_detail = function(req, res, next) {
+export const bookinstance_detail = function(req, res, next) {
     BookInstance.findById(req.params.id)
     .populate('book')
     .exec(function(err, bookinstance) {
@@ -31,7 +31,7 @@ exports.bookinstance_detail = function(req, res, next) {
 };
 
 // Display BookInstance create form on GET.
-exports.bookinstance_create_get = function(req, res, next) {
+export const bookinstance_create_get = function(req, res, next) {
     
     Book.find({}, 'title')
     .exec((err, books) => {
@@ -41,7 +41,7 @@ exports.bookinstance_create_get = function(req, res, next) {
 };
 
 // Handle BookInstance create on POST.
-exports.bookinstance_create_post = [
+export const bookinstance_create_post = [
     
     // Validate and sanitize fields
     body('book', 'Book must be specified').trim().isLength({ min: 1 }).escape(),
@@ -86,7 +86,7 @@ exports.bookinstance_create_post = [
 ];
 
 // Display BookInstance delete form on GET.
-exports.bookinstance_delete_get = function(req, res, next) {  
+export const bookinstance_delete_get = function(req, res, next) {  
 
     BookInstance.findById(req.params.id).exec((err, book_instance) => {
         if (err) return next(err);
@@ -99,7 +99,7 @@ exports.bookinstance_delete_get = function(req, res, next) {
         
 
 // Handle BookInstance delete on POST.
-exports.bookinstance_delete_post = function(req, res, next) {
+export const bookinstance_delete_post = function(req, res, next) {
     BookInstance.findByIdAndRemove(req.body.book_instanceid, function deleteCopy(err) {
         if (err) return next(err);
         res.redirect('/catalog/bookinstances');
@@ -107,7 +107,7 @@ exports.bookinstance_delete_post = function(req, res, next) {
 };
 
 // Display BookInstance update form on GET.
-exports.bookinstance_update_get = function(req, res, next) {
+export const bookinstance_update_get = function(req, res, next) {
     
     BookInstance.findById(req.params.id).populate('book').exec((err, bookinstance) => {
         if (err) return next(err);
@@ -122,7 +122,7 @@ exports.bookinstance_update_get = function(req, res, next) {
 };
 
 // Handle bookinstance update on POST.
-exports.bookinstance_update_post = [
+export const bookinstance_update_post = [
 
     // Validate and sanitize fields
     body('book', 'Book must be specified').trim().isLength({ min: 1 }).escape(),
