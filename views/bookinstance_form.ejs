@@ -1,10 +1,10 @@
 <%- include('partials/_top') %> 
 
-<title><%= title %></title>
+<title><%- title %></title>
 
 <%- include('partials/_middle') %> 
 
-<h1><%= title %> </h1>
+<h1><%- title %> </h1>
 
 <form action="" method="post">
     <div class="form-group">
@@ -19,11 +19,11 @@
                 <% }) %>
                 <% locals.book_list.forEach(book => { %>
                     <% if(locals.bookinstance) { %>
-                        <option value="<%= book._id %>" selected="<%= locals.bookinstance.book.toString() === book._id.toString() ? 'selected' : false %>">
-                            <%= book.title %>
+                        <option value="<%- book._id %>" selected="<%- locals.bookinstance.book.toString() === book._id.toString() ? 'selected' : false %>">
+                            <%- book.title %>
                         </option>
                     <% } else { %>
-                        <option value="<%= book._id %>"><%= book.title %></option>
+                        <option value="<%- book._id %>"><%- book.title %></option>
                     <% } %>
                 <% }) %> 
             </select>
@@ -31,8 +31,8 @@
             <% console.log('fire') %>
             <select name="book" id="book" class="form-control" placeholder="Select book"
             required type="select">
-                <option value="<%= bookinstance._id %>" selected="true">
-                    <%= bookinstance.book.title %>
+                <option value="<%- bookinstance.book._id %>" selected="true">
+                    <%- bookinstance.book.title %>
                 </option>
             </select>
         <% } %>
@@ -40,12 +40,12 @@
     <div class="form-group">
         <label for="imprint">Imprint: </label>
             <input type="text" id="imprint" class="form-control" placeholder="Publish and date information"
-            name="imprint" required value="<%= locals.bookinstance ? bookinstance.imprint : '' %>" />
+            name="imprint" required value="<%- locals.bookinstance ? bookinstance.imprint : '' %>" />
     </div>
     <div class="form-group">
         <label for="due_back">Date when book available: </label>
         <input type="date" class="form-control" id="due_back" type="date" 
-        name="due_back" value="<%= locals.bookinstance ? bookinstance.due_back_formatted_iso : '' %>" />
+        name="due_back" value="<%- locals.bookinstance ? bookinstance.due_back_formatted_iso : '' %>" />
     </div>
     <div class="form-group">
         <label for="status">Status: </label>
@@ -61,7 +61,7 @@
     <% if (locals.errors) { %>
      <ul>
          <% errors.forEach(error => { %>
-            <li><%= error.msg %></li> 
+            <li><%- error.msg %></li> 
          <% }) %>
      </ul>
     <% } %>
