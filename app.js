@@ -17,7 +17,8 @@ const __dirname = fileURLToPath(dirname(import.meta.url));
 
 // set up mongoose connection
 import mongoose from 'mongoose';
-const mongoDB = 'mongodb+srv://mrd2689a:ode7SLb43TLDwFGG@cluster0.umci8.mongodb.net/local_library?retryWrites=true&w=majority';
+const dev_db_url = 'mongodb+srv://mrd2689a:ode7SLb43TLDwFGG@cluster0.umci8.mongodb.net/local_library?retryWrites=true&w=majority';
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });  
 /* The useNewUrlParser option exists simply as a fallback in case the new parser
 has a bug.  useUnifiedTopology should gnrly be set to true, since it opts into using
