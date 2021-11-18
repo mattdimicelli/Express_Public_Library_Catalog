@@ -139,7 +139,7 @@ export const book_create_post = [
         }
         else {
             // Data from the form is valid.  Save the book.
-            book.save
+            book.save()
             .then(() => res.redirect(book.url))
             .catch(err => next(err));
         }
