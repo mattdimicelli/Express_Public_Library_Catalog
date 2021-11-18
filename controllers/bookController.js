@@ -67,8 +67,8 @@ export const book_detail = function(req, res, next) {
 export const book_create_get = function(req, res, next) {
     // Get all authors and genres, which we can use for adding to our book
     Promise.all([
-        Author.find.exec(),
-        Genre.find.exec(),
+        Author.find().exec(),
+        Genre.find().exec(),
     ])
     .then(results => {
         res.render('book_form', { 
