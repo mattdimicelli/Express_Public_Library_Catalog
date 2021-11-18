@@ -14,9 +14,9 @@
         <% if (author_books.length > 0) { %>
             <% author_books.forEach(book => { %>
                 <dt>
-                    <a href="<%= book.url %>"><%= book.title %> </a>
+                    <a href="<%= book.url %>"><%- book.title %> </a>
                 </dt>
-                <dd><%= book.summary %> </dd>
+                <dd><%- book.summary %> </dd>
             <% }) %>
         <% } else { %>
             <p>This author has no books.</p>

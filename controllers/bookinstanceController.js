@@ -6,38 +6,38 @@ import { body, validationResult } from 'express-validator';
 export const bookinstance_list = function(req, res, next) {
     BookInstance.find()
         .populate('book')
-        .exec(function (err, list_bookinstances) {
-            if (err) return next(err);
-            //Successful, so render
+        .exec()
+        .then(list_bookinstances => {
             res.render('bookinstance_list', {
                 title: 'Book Copy List', bookinstance_list: list_bookinstances
-            }); 
-        });
+            })
+        })
+        .catch(err => next(err)); 
 };
 
 // Display detail page for a specific BookInstance.
 export const bookinstance_detail = function(req, res, next) {
     BookInstance.findById(req.params.id)
     .populate('book')
-    .exec(function(err, bookinstance) {
-        if (err) return next(err);
+    .exec()
+    .then(bookinstance => {
         if (bookinstance === null) {
             const err = new Error('Book copy not found');
             err.status = 404;
             next(err);
         }
         res.render('bookinstance_detail', { title: `Copy: ${bookinstance.book.title}`, bookinstance });
-    });
+    })
+    .catch(err => next(err));
 };
 
 // Display BookInstance create form on GET.
 export const bookinstance_create_get = function(req, res, next) {
     
     Book.find({}, 'title')
-    .exec((err, books) => {
-        if (err) return next(err);
-        res.render('bookinstance_form', { title: 'Create Copy', book_list: books });
-    });
+    .exec()
+    .then(books => res.render('bookinstance_form', {title: 'Create Copy', book_list: books}))
+    .catch(err => next(err));
 };
 
 // Handle BookInstance create on POST.
@@ -64,8 +64,8 @@ export const bookinstance_create_post = [
         if(!errors.isEmpty()) {
             // Re-render form with sanitized values and/or error messages
             Book.find({}, 'title')
-            .exec((err, books) => {
-                if (err) return next(err);
+            .exec()
+            .then(books => {
                 res.render('bookinstance_form', {
                     title: 'Create BookInstance',
                     book_list: books,
@@ -73,14 +73,14 @@ export const bookinstance_create_post = [
                     errors: errors.array(),
                     bookinstance: bookinstance,
                 });
-            });
+            })
+            .catch(err => next(err));
             return;
         }
         else {
-            bookinstance.save(err => {
-                if (err) return next(err);
-                res.redirect(bookinstance.url);
-            });
+            bookinstance.save()
+            .then(() => res.redirect(bookinstance.url))
+            .catch(err => next(err));
         }
     }
 ];
@@ -88,37 +88,37 @@ export const bookinstance_create_post = [
 // Display BookInstance delete form on GET.
 export const bookinstance_delete_get = function(req, res, next) {  
 
-    BookInstance.findById(req.params.id).exec((err, book_instance) => {
-        if (err) return next(err);
+    BookInstance.findById(req.params.id).exec()
+    .then(book_instance => {
         if (book_instance === null) {
             res.redirect('/catalog/bookinstances');
         }
-        res.render('bookinstance_delete', { title: 'Delete Copy', book_instance, });
-    });
+        res.render('bookinstance_delete', { title: 'Delete Copy', book_instance, })
+    })
+    .catch(err => next(err));
 }
         
 
 // Handle BookInstance delete on POST.
 export const bookinstance_delete_post = function(req, res, next) {
-    BookInstance.findByIdAndRemove(req.body.book_instanceid, function deleteCopy(err) {
-        if (err) return next(err);
-        res.redirect('/catalog/bookinstances');
-    });
+    BookInstance.findByIdAndRemove(req.body.book_instanceid).exec()
+    .then(() => res.redirect('/catalog/bookinstances'))
+    .catch(err => next(err));
 };
 
 // Display BookInstance update form on GET.
 export const bookinstance_update_get = function(req, res, next) {
     
-    BookInstance.findById(req.params.id).populate('book').exec((err, bookinstance) => {
-        if (err) return next(err);
+    BookInstance.findById(req.params.id).populate('book').exec()
+    .then(bookinstance => {
         if (bookinstance === null) {
             const err = new Error('Copy not found');
             err.status = 404;
             return next(err);
         }
-    
-        res.render('bookinstance_form', { title: 'Update Copy', bookinstance });
-    });
+        res.render('bookinstance_form', { title: 'Update Copy', bookinstance })
+    })
+    .catch(err => next(err));
 };
 
 // Handle bookinstance update on POST.
@@ -153,10 +153,11 @@ export const bookinstance_update_post = [
             return;
         }
         else {
-            BookInstance.findByIdAndUpdate(req.params.id, bookinstance, {}, (err, thecopy) => {
-                if (err) return next(err);
-                res.redirect(thecopy.url);
-            });
+            BookInstance.findByIdAndUpdate(req.params.id, bookinstance, {}).exec()
+            .then(thecopy => {
+                res.redirect(thecopy.url)
+            })
+            .catch(err => next(err));
         }
     }
 ];
