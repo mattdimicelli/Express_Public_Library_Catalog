@@ -17,7 +17,7 @@ The tutorial can be found [here](https://developer.mozilla.org/en-US/docs/Learn/
 
 ### Screenshot
 <p align="center">
-  <img src="./screenshot_for_readme.png" width="65%" height="65%">
+  <img src="./screenshot_for_readme.png" width="100%" height="100%">
 </p>
 
 
