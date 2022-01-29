@@ -7,13 +7,17 @@ This is my implementation of the Express Local Library project, which was a tuto
 made by the Mozilla Developer Network and also part of the Odin Project Curriculum
 for Node.js.  I followed the tutorial but did make some modifications, such as 
 using EJS instead of Pug, which was used in the tutorial.  I also took the time 
-to convert all of the CommonJS imports and exports to ECMA.  I like to "loosely" 
-follow tutorials since it ensures that I am critically-thinking at more moments
+to convert all of the CommonJS imports and exports to ECMA.  Furthermore, I refactored
+the callbacks used in the original code from the tutorial to be promises instead.
+I like to "loosely" follow tutorials since it ensures that I am critically-thinking at more moments
 during the learning process and not simply copying code!  I specifically chose
 EJS because I prefered to have a more HTML-like templating syntax than not.  In regards
 the ECMA, ECMA imports/exports are now native to Node.js and many packages on npm are
 even being converted to this system, so it is the future and I have learned that it is
-ideal to write Node.js applications using it.
+ideal to write Node.js applications using it.  For a similiar reason, I chose to utilize 
+promises in my version because a promise-based implementation could be considered more 
+elegant.  The tutorial that this project is based on was made quite a while ago, and 
+coding styles have changed.
 
 ### Challenge
 
