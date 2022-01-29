@@ -57,4 +57,5 @@ native query language
 EJS via "views" and "partial-views" to render the data as HTML to be displayed 
 in the browser
 - The details of working with forms (ex. validation, sanitization, etc)
+- What environmental variables are and how to use them
 - How to deploy the app to production using Heroku
