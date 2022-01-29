@@ -17,7 +17,6 @@ const __dirname = fileURLToPath(dirname(import.meta.url));
 
 // set up mongoose connection
 import mongoose from 'mongoose';
-f0vUavgyfZNmfSmc
 const mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });  
 /* The useNewUrlParser option exists simply as a fallback in case the new parser
